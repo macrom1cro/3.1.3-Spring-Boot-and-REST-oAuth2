@@ -1,8 +1,7 @@
-package hiber.dao;
+package crud.dao;
 
-import hiber.model.User;
+import crud.model.User;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

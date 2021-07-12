@@ -1,4 +1,4 @@
-package hiber.model;
+package crud.model;
 
 import javax.persistence.*;
 

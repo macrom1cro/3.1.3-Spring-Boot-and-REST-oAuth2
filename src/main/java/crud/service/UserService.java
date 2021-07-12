@@ -1,6 +1,6 @@
-package hiber.service;
+package crud.service;
 
-import hiber.model.User;
+import crud.model.User;
 
 import java.util.List;
 
