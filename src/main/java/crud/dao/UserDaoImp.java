@@ -1,18 +1,15 @@
 package crud.dao;
 
 import crud.model.User;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao {
 
-   @Autowired
+   @PersistenceContext
    private EntityManager entityManager;
 
    @Override
@@ -31,9 +28,8 @@ public class UserDaoImp implements UserDao {
    }
 
    @Override
-   @SuppressWarnings("unchecked")
    public List<User> listUsers() {
-      List<User> listUsers = entityManager.createQuery("from users",User.class).getResultList();
+      List<User> listUsers = entityManager.createQuery("from User",User.class).getResultList();
       return listUsers;
    }
 

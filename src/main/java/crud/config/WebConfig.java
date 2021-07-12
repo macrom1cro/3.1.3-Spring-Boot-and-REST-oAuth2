@@ -1,7 +1,5 @@
 package crud.config;
 
-import crud.model.User;
-import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -57,16 +53,18 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public LocalContainerEntityManagerFactoryBean getEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean containerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        containerEntityManagerFactoryBean.setDataSource(getDataSource());
+
         HibernateJpaVendorAdapter adaptor = new HibernateJpaVendorAdapter();
-        containerEntityManagerFactoryBean.setJpaVendorAdapter(adaptor);
-        containerEntityManagerFactoryBean.setPackagesToScan("crud");
 
         Properties props = new Properties();
         props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 
+        containerEntityManagerFactoryBean.setDataSource(getDataSource());
+        containerEntityManagerFactoryBean.setJpaVendorAdapter(adaptor);
+        containerEntityManagerFactoryBean.setPackagesToScan("crud.model");
         containerEntityManagerFactoryBean.setJpaProperties(props);
+
         return containerEntityManagerFactoryBean;
     }
 
