@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <head>
+        <title>Car Info</title>
+    </head>
+</head>
+<body>
+    <h1>Car Info</h1>
+
+    <table border="5">
+        <tr>
+            <th>Brand</th>
+            <th>Max Speed</th>
+            <th>Number Of Seats</th>
+        </tr>
+
+    <tr th:each="car, state : ${carList}"
+        class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
+
+        <td th:utext="${car.brand}">Brand</td>
+        <td th:utext="${car.maxSpeed}">Max Speed</td>
+        <td th:utext="${car.numberOfSeats}">Number Of Seats</td>
+    </tr>
+
+    </table>
+
+</body>
+</html>
