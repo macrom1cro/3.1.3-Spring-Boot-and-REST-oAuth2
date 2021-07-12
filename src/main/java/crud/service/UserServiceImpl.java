@@ -16,8 +16,20 @@ public class UserServiceImpl implements UserService {
 
    @Transactional
    @Override
-   public void add(User user) {
-      userDao.add(user);
+   public void saveUser(User user) {
+      userDao.saveUser(user);
+   }
+
+   @Transactional
+   @Override
+   public void deleteUser(User user) {
+      userDao.deleteUser(user);
+   }
+
+   @Transactional
+   @Override
+   public void updateUser(User user) {
+      userDao.updateUser(user);
    }
 
    @Transactional(readOnly = true)
