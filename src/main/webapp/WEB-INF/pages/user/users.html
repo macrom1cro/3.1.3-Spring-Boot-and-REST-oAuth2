@@ -20,10 +20,11 @@
   </tr>
 
   <tr th:each="user, state : ${listUsers}"
+
       class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
 
     <td th:utext="${user.id}">Id</td>
-    <td th:utext="${user.firstName}">Name</td>
+    <td> <a th:href="@{/user/{id}(id=${user.getId()})}" th:text="${user.getFirstName()}">user</a></td>
     <td th:utext="${user.lastName}">Last Name</td>
     <td th:utext="${user.email}">Email</td>
   </tr>
@@ -34,11 +35,7 @@
 <hr/>
 
 <a href="/user/new">Create new user</a>
-<!--<a th:href="@{/user/{id}/edit(id=${user.id()})}">Edit</a>-->
 
-<!--<form th:method="DELETE" th:action="@{/user/{id}(id=${user.id()})}">-->
-<!--  <input type="submit" value="Delete"/>-->
-<!--</form>-->
 
 </body>
 </html>
