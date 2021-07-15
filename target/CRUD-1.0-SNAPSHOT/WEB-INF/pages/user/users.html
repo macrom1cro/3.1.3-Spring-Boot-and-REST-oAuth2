@@ -2,41 +2,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <head>
-    <title>Table users</title>
-  </head>
+    <meta charset="UTF-8">
+    <head>
+        <title>Table users</title>
+    </head>
 </head>
 <body>
+<div style="text-align: center;">
+    <h1>Table users</h1>
 
-<h1>Table users</h1>
+    <table border="1" align="center">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Control menu</th>
+        </tr>
 
-<table border="1">
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Surname</th>
-    <th>Email</th>
-  </tr>
+        <tr th:each="user, state : ${listUsers}"
 
-  <tr th:each="user, state : ${listUsers}"
+            class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
 
-      class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
+            <td th:utext="${user.id}">Id</td>
+            <td th:utext="${user.firstName}">Name</td>
+            <td th:utext="${user.lastName}">Surname</td>
+            <td th:utext="${user.email}">Email</td>
+            <td>
+                <form th:method="POST" th:action="@{/user/{id}(id=${user.getId()})}">
+                    <input type="submit" value="Open profile"/>
+                </form>
+                <form th:method="DELETE" th:action="@{/user/{id}(id=${user.getId()})}">
+                    <input type="submit" value="Delete"/>
+                </form>
+                <form th:method="POST" th:action="@{/user/{id}/edit(id=${user.getId()})}">
+                    <input type="submit" value="Edit"/>
+                </form>
+            </td>
+        </tr>
 
-    <td th:utext="${user.id}">Id</td>
-    <td> <a th:href="@{/user/{id}(id=${user.getId()})}" th:text="${user.getFirstName()}">user</a></td>
-    <td th:utext="${user.lastName}">Last Name</td>
-    <td th:utext="${user.email}">Email</td>
+    </table>
 
-  </tr>
+    <br/>
+    <hr/>
 
-</table>
-
-<br/>
-<hr/>
-
-<a href="/user/new">Create new user</a>
-
+    <form th:method="POST" th:action="@{/user}">
+        <input type="submit" value="Create new user"/>
+    </form>
+</div>
 
 </body>
 </html>

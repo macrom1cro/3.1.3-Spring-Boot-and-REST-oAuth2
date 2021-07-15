@@ -8,10 +8,10 @@
   </head>
 </head>
 <body>
-
+<div style="text-align: center;">
 <h1>Create user</h1>
 
-<form th:method="POST" th:action="@{/user}" th:object="${user}">
+<form th:method="POST" th:action="@{/user/new}" th:object="${user}">
   <label for="firstName">Name</label>
   <input type="text" th:field="*{firstName}" id="firstName">
 
@@ -30,6 +30,6 @@
   <input type="submit" value="Add user"/>
 
 </form>
-
+</div>
 </body>
 </html>

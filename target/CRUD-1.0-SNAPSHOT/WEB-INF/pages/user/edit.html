@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update user</title>
+    <title>Edit user</title>
 </head>
 <body>
-
-<h1>Update user</h1>
+<div style="text-align: center;">
+  <h1>Edit user</h1>
 
 <form th:method="PATCH" th:action="@{/user/{id}(id=${user.getId()})}" th:object="${user}">
 
@@ -29,6 +29,6 @@
   <input type="submit" value="Update user"/>
 
 </form>
-
+</div>
 </body>
 </html>
