@@ -2,9 +2,11 @@ package crud.dao;
 
 import crud.model.Role;
 import crud.model.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -40,4 +42,11 @@ public class UserDaoImp implements UserDao {
       return entityManager.find(User.class, id);
    }
 
+   @Override
+   public User getUserByName(String name) {
+      User user = entityManager.
+              createQuery("SELECT u from User u WHERE u.name = :username", User.class).
+              setParameter("username", name).getSingleResult();
+      return user;
+   }
 }
