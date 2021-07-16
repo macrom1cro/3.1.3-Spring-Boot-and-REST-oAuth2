@@ -18,12 +18,13 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
                                         HttpServletResponse httpServletResponse,
                                         Authentication authentication) throws IOException, ServletException {
-//        httpServletResponse.sendRedirect("/user");
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_USER")) {
-            httpServletResponse.sendRedirect("/hello");
+            httpServletResponse.sendRedirect("/");
         } else if (roles.contains("ROLE_ADMIN")) {
             httpServletResponse.sendRedirect("/user");
+        } else if (roles.contains("ROLE_MODERATOR")) {
+            httpServletResponse.sendRedirect("/hello");
         } else {
             httpServletResponse.sendRedirect("/login");
         }

@@ -151,16 +151,16 @@ public class User implements UserDetails {
       return true;
    }
 
-//   @Override
-//   public boolean equals(Object o) {
-//      if (this == o) return true;
-//      if (o == null || getClass() != o.getClass()) return false;
-//      User user = (User) o;
-//      return id.equals(user.id) && name.equals(user.name) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && password.equals(user.password) && roles.equals(user.roles);
-//   }
-//
-//   @Override
-//   public int hashCode() {
-//      return Objects.hash(id, name, firstName, lastName, email, password, roles);
-//   }
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      User user = (User) o;
+      return id.equals(user.id) && name.equals(user.name) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && password.equals(user.password);
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(id, name, firstName, lastName, email, password);
+   }
 }

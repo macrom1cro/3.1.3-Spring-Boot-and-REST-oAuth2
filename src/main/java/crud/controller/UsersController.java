@@ -31,6 +31,7 @@ public class UsersController {
     public String newUsers(@ModelAttribute("user") User user) {
         return "user/new";
     }
+
     @PostMapping()
     public String openCreate() {
         return "redirect:/user/new";
