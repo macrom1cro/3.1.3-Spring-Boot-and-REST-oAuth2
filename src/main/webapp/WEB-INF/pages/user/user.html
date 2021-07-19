@@ -15,21 +15,19 @@
             <th>Name</th>
             <th>Surname</th>
             <th>Email</th>
-            <th>Control menu</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Role</th>
         </tr>
 
         <td><p th:text="${user.getId()}">VALUE</p></td>
         <td><p th:text="${user.getFirstName()}">VALUE</p></td>
         <td><p th:text="${user.getLastName()}">VALUE</p></td>
         <td><p th:text="${user.getEmail()}">VALUE</p></td>
-        <td>
-            <form th:method="DELETE" th:action="@{/user/{id}(id=${user.getId()})}">
-                <input type="submit" value="Delete"/>
-            </form>
-            <form th:method="POST" th:action="@{/user/{id}/edit(id=${user.getId()})}">
-                <input type="submit" value="Edit"/>
-            </form>
-        </td>
+        <td th:utext="${user.getName()}">VALUE</td>
+        <td th:utext="${user.getPassword()}">VALUE</td>
+        <td th:utext="${user.getRoles()}">VALUE</td>
+
     </table>
 
     <br>

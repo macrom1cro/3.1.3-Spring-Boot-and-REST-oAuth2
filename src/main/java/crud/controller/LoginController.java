@@ -15,11 +15,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class UserController2 {
+public class LoginController {
 
     final UserService userService;
 
-    public UserController2(UserService userService) {
+    public LoginController(UserService userService) {
         this.userService = userService;
     }
 
@@ -37,12 +37,6 @@ public class UserController2 {
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage() {
         return "login";
-    }
-
-    @GetMapping("")
-    public String showUserPage(ModelMap model, Principal principal) {
-        model.addAttribute("user", userService.getUserByName(principal.getName()));
-        return "user/user";
     }
 
 }

@@ -9,7 +9,7 @@
 <div style="text-align: center;">
 <h1>Create user</h1>
 
-<form th:method="POST" th:action="@{/user/new}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
   <label for="firstName">Name</label>
   <input type="text" th:field="*{firstName}" id="firstName">
 
@@ -25,9 +25,31 @@
 
   <br/>
 
+  <label for="Login">Login</label>
+  <input type="text" th:field="*{name}" id="Login">
+
+  <br/>
+
+  <label for="Password">Password</label>
+  <input type="text" th:field="*{password}" id="Password">
+
+  <br/>
+
+  <label for="role">Choose role for new user</label>
+  <select class="form-control" multiple name="listRoles" id="role"
+          size="2">
+    <option selected name="ROLE_USER" value="ROLE_USER">USER</option>
+    <option name="ROLE_ADMIN" value="ROLE_ADMIN">ADMIN</option>
+  </select>
+
+  <br/>
+
   <input type="submit" value="Add user"/>
 
 </form>
+  <br>
+  <a th:href="@{/logout}">Logout</a>
+
 </div>
 </body>
 </html>
