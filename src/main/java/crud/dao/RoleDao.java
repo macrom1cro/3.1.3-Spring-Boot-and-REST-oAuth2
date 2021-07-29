@@ -4,6 +4,6 @@ import crud.model.Role;
 
 import java.util.Set;
 
-public interface RoleSetDao {
+public interface RoleDao {
     Set<Role> getRolesByName(String[] roles);
 }

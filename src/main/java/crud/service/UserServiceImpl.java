@@ -1,28 +1,19 @@
 package crud.service;
 
-import crud.dao.RoleSetDao;
 import crud.dao.UserDao;
-import crud.model.Role;
 import crud.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
-    final
-    RoleSetDao roleSetDao;
+
     final
     UserDao userDao;
 
-    public UserServiceImpl(RoleSetDao roleSetDao, UserDao userDao) {
-        this.roleSetDao = roleSetDao;
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
@@ -63,8 +54,5 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserByName(name);
     }
 
-    @Override
-    public Set<Role> getRolesByName(String[] roles) {
-        return roleSetDao.getRolesByName(roles);
-    }
+
 }
