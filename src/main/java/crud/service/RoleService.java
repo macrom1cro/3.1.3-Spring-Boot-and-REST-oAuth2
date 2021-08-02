@@ -4,6 +4,6 @@ import crud.model.Role;
 
 import java.util.Set;
 
-public interface RoleServise {
+public interface RoleService {
     Set<Role> getRolesByName(String[] roles);
 }

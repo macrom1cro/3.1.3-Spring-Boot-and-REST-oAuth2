@@ -1,7 +1,7 @@
 package crud.controller;
 
 import crud.model.User;
-import crud.service.RoleServise;
+import crud.service.RoleService;
 import crud.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    final RoleServise roleServise;
+    final RoleService roleServise;
     final UserService userService;
 
-    public AdminController(UserService userService, RoleServise roleServise) {
+    public AdminController(UserService userService, RoleService roleServise) {
         this.userService = userService;
         this.roleServise = roleServise;
     }
