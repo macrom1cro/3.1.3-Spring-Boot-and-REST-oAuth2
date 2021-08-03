@@ -1,15 +1,13 @@
 package crud.dao;
 
-import crud.model.Role;
 import crud.model.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class UserDaoImp implements UserDao {
@@ -17,8 +15,12 @@ public class UserDaoImp implements UserDao {
    @PersistenceContext
    private EntityManager entityManager;
 
+   @Autowired
+   BCryptPasswordEncoder bCryptPasswordEncoder;
+
    @Override
    public void saveUser(User user) {
+      user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
       entityManager.persist(user);
    }
 
@@ -29,6 +31,7 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public void updateUser(User user) {
+      user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
       entityManager.merge(user);
    }
 
