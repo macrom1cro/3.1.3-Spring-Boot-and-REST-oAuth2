@@ -36,8 +36,8 @@ public class AdminController {
     }
 
     @PostMapping()
-    public String openCreate() {
-        return "redirect:/admin/new";
+    public String openCreate(@ModelAttribute("user") User user) {
+        return "admin/new";
     }
 
     @PostMapping("/new")
@@ -63,13 +63,15 @@ public class AdminController {
     }
 
     @PostMapping("/{id}/edit")
-    public String openEdit(@PathVariable("id") int id) {
-        return String.format("redirect:/admin/%d/edit", id);
+    public String openEdit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("user", userService.getUserById(id));
+        return "admin/edit";
     }
 
     @PostMapping("/{id}")
-    public String openProfile(@PathVariable("id") int id) {
-        return String.format("redirect:/admin/%d", id);
+    public String openProfile(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
+        return "/admin/user";
     }
 
     @DeleteMapping("/{id}")

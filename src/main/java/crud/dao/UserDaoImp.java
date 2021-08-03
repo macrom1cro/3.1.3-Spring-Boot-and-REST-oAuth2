@@ -31,7 +31,9 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public void updateUser(User user) {
-      user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+      if (user.getPassword() == bCryptPasswordEncoder.encode(user.getPassword())){
+         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+      }
       entityManager.merge(user);
    }
 
