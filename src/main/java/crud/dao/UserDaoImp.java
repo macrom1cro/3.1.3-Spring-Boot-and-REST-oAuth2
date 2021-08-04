@@ -15,12 +15,8 @@ public class UserDaoImp implements UserDao {
    @PersistenceContext
    private EntityManager entityManager;
 
-   @Autowired
-   BCryptPasswordEncoder bCryptPasswordEncoder;
-
    @Override
    public void saveUser(User user) {
-      user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
       entityManager.persist(user);
    }
 
@@ -31,10 +27,6 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public void updateUser(User user) {
-
-      if (!(user.getPassword().equals(entityManager.find(User.class, user.getId()).getPassword()))){
-         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-      }
       entityManager.merge(user);
    }
 
@@ -54,5 +46,10 @@ public class UserDaoImp implements UserDao {
               createQuery("SELECT u from User u WHERE u.name = :username", User.class).
               setParameter("username", name).getSingleResult();
       return user;
+   }
+
+   @Override
+   public String getUserPassword(User user) {
+      return entityManager.find(User.class, user.getId()).getPassword();
    }
 }
