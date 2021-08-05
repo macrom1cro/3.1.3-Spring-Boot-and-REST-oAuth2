@@ -47,7 +47,6 @@ public class UserDaoImp implements UserDao {
               setParameter("username", name).getSingleResult();
       return user;
    }
-
    @Override
    public String getUserPassword(User user) {
       return entityManager.find(User.class, user.getId()).getPassword();
