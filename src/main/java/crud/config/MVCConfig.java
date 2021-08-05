@@ -21,7 +21,7 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 @ComponentScan("crud")
-public class AppConfig {
+public class MVCConfig {
     @Autowired
     private Environment env;
 
