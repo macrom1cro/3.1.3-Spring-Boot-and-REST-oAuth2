@@ -1,4 +1,4 @@
-package crud.service;
+package crud.security;
 
 
 import crud.dao.UserDao;
