@@ -1,6 +1,7 @@
 package crud.controller;
 
 import crud.service.UserService;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -17,14 +18,7 @@ import java.util.List;
 @RequestMapping("/")
 public class LoginController {
 
-    final UserService userService;
-
-    public LoginController(UserService userService) {
-        this.userService = userService;
-    }
-
-
-    @RequestMapping(value = "hello", method = RequestMethod.GET)
+    @RequestMapping("/")
     public String printWelcome(ModelMap model) {
         List<String> messages = new ArrayList<>();
         messages.add("Hello!");
@@ -32,11 +26,6 @@ public class LoginController {
         messages.add("5.2.0 version by sep'19 ");
         model.addAttribute("messages", messages);
         return "hello";
-    }
-
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String loginPage() {
-        return "login";
     }
 
 }
