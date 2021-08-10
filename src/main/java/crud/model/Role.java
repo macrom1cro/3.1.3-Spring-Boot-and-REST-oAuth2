@@ -1,7 +1,9 @@
 package crud.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 //import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -14,20 +16,20 @@ import java.util.Set;
 @Table(name = "roles")
 @Data//ломбок аннотация: генерирует геттеры, сеттеры, иквалс, хеш код методы
 @NoArgsConstructor//ломбок аннотация: конструктор без аргуметов
-public class Role  {
-//implements GrantedAuthority
+public class Role {
+    //implements GrantedAuthority
     @Id
     private Long id;
 
     @Column
     private String role;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
-//    @Override
-//    public String getAuthority() {
-//        return role;
-//    }
-
+    @Override
+    public String toString() {
+        return role;
+    }
 }

@@ -1,6 +1,7 @@
 package crud.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.userdetails.UserDetails;
@@ -14,46 +15,36 @@ import java.util.Set;
 @Table(name = "users")
 @Data//ломбок аннотация: генерирует геттеры, сеттеры, иквалс, хеш код методы
 @NoArgsConstructor//ломбок аннотация: конструктор без аргуметов
-public class User  {
-//implements UserDetails
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
+public class User {
+    //implements UserDetails
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-   @Column(name = "login")
-   private String name;
+    @Column(name = "login")
+    private String name;
 
-   @Column(name = "name", unique = true)
-   private String firstName;
+    @Column(name = "name", unique = true)
+    private String firstName;
 
-   @Column(name = "last_name")
-   private String lastName;
+    @Column(name = "last_name")
+    private String lastName;
 
-   @Column(name = "email")
-   private String email;
+    @Column(name = "email")
+    private String email;
 
-   @Column(name = "password")
-   private String password;
+    @Column(name = "password")
+    private String password;
 
-   @ManyToMany(fetch = FetchType.LAZY)
-   @JoinTable(name = "user_role",
-           joinColumns = @JoinColumn(name = "user_id"),
-           inverseJoinColumns = @JoinColumn(name = "roles_id"))
-   private Set<Role> roles;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private Set<Role> roles;
 
 //   @Override
 //   public Collection<? extends GrantedAuthority> getAuthorities() {
 //      return roles;
-//   }
-//
-//   @Override
-//   public String getPassword() {
-//      return password;
-//   }
-//
-//   @Override
-//   public String getUsername() {
-//      return name;
 //   }
 //
 //   @Override
@@ -75,5 +66,4 @@ public class User  {
 //   public boolean isEnabled() {
 //      return true;
 //   }
-
 }
