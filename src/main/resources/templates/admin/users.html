@@ -33,15 +33,18 @@
             <td th:utext="${user.password}">Password</td>
             <td th:utext="${user.roles}">Role</td>
             <td>
-                <form th:method="POST" th:action="@{/admin/{id}(id=${user.getId()})}">
-                    <input type="submit" value="Open profile"/>
+                <form th:action="@{/admin/{id}(id=${user.getId()})}">
+                    <button>Open profile</button>
                 </form>
                 <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
                     <input type="submit" value="Delete"/>
                 </form>
-                <form th:method="POST" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
-                    <input type="submit" value="Edit"/>
+                <form th:action="@{/admin/{id}/edit(id=${user.getId()})}">
+                    <button>Edit</button>
                 </form>
+<!--                <form th:method="POST" th:action="@{/admin/{id}/edit(id=${user.getId()})}">-->
+<!--                    <input type="submit" value="Edit"/>-->
+<!--                </form>-->
             </td>
         </tr>
 
@@ -50,8 +53,8 @@
     <br/>
     <hr/>
 
-    <form th:method="POST" th:action="@{/admin}">
-        <input type="submit" value="Create new user"/>
+    <form th:action="@{/admin/new}">
+        <button >Create new user</button>
     </form>
 
     <br>

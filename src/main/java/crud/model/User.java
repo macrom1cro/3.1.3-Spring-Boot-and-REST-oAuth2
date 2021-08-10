@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 //import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
@@ -21,20 +23,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "login")
+    @NotBlank (message = "Login is mandatory")
+    @Column(name = "login", unique = true)
     private String name;
 
-    @Column(name = "name", unique = true)
+    @NotBlank (message = "Password is mandatory")
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "name")
     private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
 
+    @Email(message = "Email should be valid")
     @Column(name = "email")
     private String email;
-
-    @Column(name = "password")
-    private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",

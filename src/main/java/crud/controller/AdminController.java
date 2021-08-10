@@ -5,7 +5,10 @@ import crud.service.RoleService;
 import crud.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,9 +28,21 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "/admin/user";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("user") @Valid User user,
+                         BindingResult bindingResult,
+                         @RequestParam(required = false, name = "listRoles") String[] input_roles) {
+        if (bindingResult.hasErrors()) {
+            return "admin/new";
+        }
+        user.setRoles(roleServise.getRolesByName(input_roles));
+        userService.updateUser(user);
+        return "redirect:/admin";
     }
 
     @GetMapping("/new")
@@ -35,47 +50,33 @@ public class AdminController {
         return "admin/new";
     }
 
-    @PostMapping()
-    public String openCreate(@ModelAttribute("user") User user) {
-        return "admin/new";
-    }
-
     @PostMapping("/new")
-    public String Create(@ModelAttribute("user") User user,
+    public String Create(@ModelAttribute("user") @Valid User user,
+                         BindingResult bindingResult,
                          @RequestParam(required = false, name = "listRoles") String[] input_roles) {
+        if (bindingResult.hasErrors()) {
+            return "admin/new";
+        }
         user.setRoles(roleServise.getRolesByName(input_roles));
         userService.saveUser(user);
         return "redirect:/admin";
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
+    public String edit(Model model, @PathVariable("id") long id) {
         model.addAttribute("user", userService.getUserById(id));
         return "admin/edit";
     }
 
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user,
-                         @RequestParam(required = false, name = "listRoles") String[] input_roles) {
-        user.setRoles(roleServise.getRolesByName(input_roles));
-        userService.updateUser(user);
-        return "redirect:/admin";
-    }
+//    @PostMapping("/{id}/edit")
+//    public String openEdit(Model model, @PathVariable("id") long id) {
+//        model.addAttribute("user", userService.getUserById(id));
+//        return "admin/edit";
+//    }
 
-    @PostMapping("/{id}/edit")
-    public String openEdit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "admin/edit";
-    }
-
+//    @DeleteMapping("/{id}")
     @PostMapping("/{id}")
-    public String openProfile(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "/admin/user";
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public String delete(@PathVariable("id") long id) {
         userService.deleteUser(userService.getUserById(id));
         return "redirect:/admin";
     }
