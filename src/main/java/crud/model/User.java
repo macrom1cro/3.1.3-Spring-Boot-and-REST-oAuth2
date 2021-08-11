@@ -1,7 +1,6 @@
 package crud.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -24,23 +22,23 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Login is mandatory")
-    @Column(name = "login", unique = true)
-    private String name;
-
-    @NotBlank(message = "Password is mandatory")
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "name")
+    @Column
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column
     private String lastName;
 
+    @Column
+    private int age;
+
+    @NotBlank(message = "Login is mandatory")
     @Email(message = "Email should be valid")
-    @Column(name = "email")
+    @Column
     private String email;
+
+    @NotBlank(message = "Password is mandatory")
+    @Column
+    private String password;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
@@ -55,7 +53,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override

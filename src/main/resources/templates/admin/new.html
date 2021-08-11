@@ -10,41 +10,29 @@
 <h1>Create user</h1>
 
 <form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
-  <label for="firstName">Name</label>
+  <label for="firstName">First Name</label>
   <input type="text" th:field="*{firstName}" id="firstName">
-
   <br/>
-
-  <label for="lastName">Surname</label>
+  <label for="lastName">Last Name</label>
   <input type="text" th:field="*{lastName}" id="lastName">
-
   <br/>
-
+  <label for="age">Age</label>
+  <input type="text" th:field="*{age}" id="age">
+  <br/>
   <label for="email">Email</label>
   <input type="text" th:field="*{email}" id="email">
   <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
-
   <br/>
-
-  <label for="Login">Login</label>
-  <input type="text" th:field="*{name}" id="Login">
-  <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Login error</div>
-
-  <br/>
-
   <label for="Password">Password</label>
   <input type="text" th:field="*{password}" id="Password">
   <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
-
   <br/>
-
   <label for="role">Choose role for new user</label>
   <select class="form-control" multiple name="listRoles" id="role"
           size="2">
     <option selected name="ROLE_USER" value="ROLE_USER">USER</option>
     <option name="ROLE_ADMIN" value="ROLE_ADMIN">ADMIN</option>
   </select>
-
   <br/>
 
   <input type="submit" value="Add user"/>
