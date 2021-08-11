@@ -68,14 +68,7 @@ public class AdminController {
         return "admin/edit";
     }
 
-//    @PostMapping("/{id}/edit")
-//    public String openEdit(Model model, @PathVariable("id") long id) {
-//        model.addAttribute("user", userService.getUserById(id));
-//        return "admin/edit";
-//    }
-
-//    @DeleteMapping("/{id}")
-    @PostMapping("/{id}")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.deleteUser(userService.getUserById(id));
         return "redirect:/admin";
