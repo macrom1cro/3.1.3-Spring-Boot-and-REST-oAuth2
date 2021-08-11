@@ -23,10 +23,6 @@ public class Role implements GrantedAuthority{
     @Column
     private String role;
 
-    @EqualsAndHashCode.Exclude
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
-
     @Override
     public String toString() {
         return role;
