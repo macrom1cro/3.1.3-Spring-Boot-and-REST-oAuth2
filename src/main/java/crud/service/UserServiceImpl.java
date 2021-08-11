@@ -4,6 +4,7 @@ import crud.dao.UserDao;
 import crud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,13 +20,13 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-//    @Autowired
-//    BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     @Override
     public void saveUser(User user) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.saveUser(user);
     }
 
@@ -38,9 +39,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void updateUser(User user) {
-//        if (!(user.getPassword().equals(userDao.getUserPassword(user)))){
-//            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        }
+        if (!(user.getPassword().equals(userDao.getUserPassword(user)))){
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
         userDao.updateUser(user);
     }
 

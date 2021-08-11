@@ -28,4 +28,8 @@ public class LoginController {
         return "hello";
     }
 
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String loginPage() {
+        return "login";
+    }
 }

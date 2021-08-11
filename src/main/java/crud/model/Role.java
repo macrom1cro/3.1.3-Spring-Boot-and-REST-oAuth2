@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-//import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -16,8 +16,7 @@ import java.util.Set;
 @Table(name = "roles")
 @Data//ломбок аннотация: генерирует геттеры, сеттеры, иквалс, хеш код методы
 @NoArgsConstructor//ломбок аннотация: конструктор без аргуметов
-public class Role {
-    //implements GrantedAuthority
+public class Role implements GrantedAuthority{
     @Id
     private Long id;
 
@@ -30,6 +29,11 @@ public class Role {
 
     @Override
     public String toString() {
+        return role;
+    }
+
+    @Override
+    public String getAuthority() {
         return role;
     }
 }
