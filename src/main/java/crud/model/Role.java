@@ -15,11 +15,13 @@ import java.util.Set;
 @Data//ломбок аннотация: генерирует геттеры, сеттеры, иквалс, хеш код методы
 @NoArgsConstructor//ломбок аннотация: конструктор без аргуметов
 public class Role implements GrantedAuthority{
+
     @Id
     private Long id;
 
     @Column
     private String role;
+
 
     @Override
     public String toString() {
