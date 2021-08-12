@@ -22,7 +22,6 @@ public class Role implements GrantedAuthority{
     @Column
     private String role;
 
-
     @Override
     public String toString() {
         return role;
