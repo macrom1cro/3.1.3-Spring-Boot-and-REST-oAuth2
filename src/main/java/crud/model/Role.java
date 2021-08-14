@@ -26,7 +26,7 @@ public class Role implements GrantedAuthority{
     public String toString() {
         StringBuffer sb = new StringBuffer(role);
 
-        return sb.delete(0,4).toString();
+        return sb.delete(0,5).toString();
     }
 
     @Override
