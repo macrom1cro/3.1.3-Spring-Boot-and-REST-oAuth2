@@ -10,7 +10,7 @@ $(document).ready(function () {
             $('#ageEdit').val(user.age);
             $('#emailEdit').val(user.email);
             $('#passwordEdit').val(user.password);
-            // $('#rolesEdit').val(user.role);
+            $('#rolesEdit').val(user.role);
         });
         $('#editModal').modal();
     });
