@@ -78,10 +78,10 @@ public class AdminController {
     public String Create(@ModelAttribute("user") @Valid User user,
                          BindingResult bindingResult,
                          @RequestParam(required = false, name = "listRoles") String[] input_roles) {
-//        if (bindingResult.hasErrors()) {
-//            return "redirect:/admin";//найти валидацию форм в модальном окне
-//        }
-//        user.setRoles(roleService.getRolesByName(input_roles));
+        if (bindingResult.hasErrors()) {
+            return "redirect:/admin";//найти валидацию форм в модальном окне
+        }
+        user.setRoles(roleService.getRolesByName(input_roles));
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -94,10 +94,10 @@ public class AdminController {
     @RequestMapping(value = "/update", method = {RequestMethod.PUT, RequestMethod.GET})
     public String update(@Valid User user, BindingResult bindingResult,
                          @RequestParam(required = false, name = "listRoles") String[] input_roles) {
-//        if (bindingResult.hasErrors()) {
-//            return "redirect:/admin";
-//        }
-//        user.setRoles(roleService.getRolesByName(input_roles));
+        if (bindingResult.hasErrors()) {
+            return "redirect:/admin";
+        }
+        user.setRoles(roleService.getRolesByName(input_roles));
         userService.updateUser(user);
         return "redirect:/admin";
     }
