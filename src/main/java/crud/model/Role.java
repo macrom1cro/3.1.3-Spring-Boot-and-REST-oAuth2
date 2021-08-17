@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "roles")
 @Data//ломбок аннотация: генерирует геттеры, сеттеры, иквалс, хеш код методы
 @NoArgsConstructor//ломбок аннотация: конструктор без аргуметов
-public class Role implements GrantedAuthority{
+public class Role implements GrantedAuthority {
 
     @Id
     private Long id;
@@ -22,11 +22,16 @@ public class Role implements GrantedAuthority{
     @Column
     private String role;
 
+//    @Override
+//    public String toString() {
+//        StringBuffer sb = new StringBuffer(role);
+//
+//        return sb.delete(0,5).toString();
+//    }
+
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer(role);
-
-        return sb.delete(0,5).toString();
+        return role;
     }
 
     @Override
