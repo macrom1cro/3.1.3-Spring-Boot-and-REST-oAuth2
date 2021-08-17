@@ -91,7 +91,7 @@ public class AdminController {
     }
 
     @PatchMapping("/update")
-    public String update(@Valid User user, BindingResult bindingResult,
+    public String update(@ModelAttribute ("user") @Valid User user, BindingResult bindingResult,
                          @RequestParam(required = false, name = "listRoles") String[] input_roles) {
 //        if (bindingResult.hasErrors()) {
 //            return "redirect:/admin";
@@ -102,7 +102,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete")
     public String delete(@PathVariable("id") long id) {
         userService.deleteUser(userService.getUserById(id));
         return "redirect:/admin";
