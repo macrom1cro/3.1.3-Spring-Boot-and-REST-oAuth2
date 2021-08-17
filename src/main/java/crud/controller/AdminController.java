@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,7 +24,8 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String listUsers(ModelMap model) {
+    public String listUsers(ModelMap model, Principal principal) {
+        model.addAttribute("principalUser", userService.getUserByName(principal.getName()));
         model.addAttribute("listUsers", userService.listUsers());
         return "/admin/users";
     }
@@ -50,10 +52,7 @@ public class AdminController {
 //    public String newUsers(@ModelAttribute("user") User user) {
 //        return "admin/new";
 //    }
-//    @GetMapping("/new")
-//    public String newUsers(@ModelAttribute("user") User user) {
-//        return "redirect:/admin";
-//    }
+
 //
 //    @PostMapping("/new")
 //    public String Create(@ModelAttribute("user") @Valid User user,
@@ -86,26 +85,10 @@ public class AdminController {
 //        if (bindingResult.hasErrors()) {
 //            return "admin/new";//найти валидацию форм в модальном окне
 //        }
-//        user.setRoles(roleService.getRolesByName(input_roles));
+        user.setRoles(roleService.getRolesByName(input_roles));
         userService.saveUser(user);
         return "redirect:/admin";
     }
-//    @DeleteMapping("/{id}")
-//    public String delete(@PathVariable("id") long id) {
-//        userService.deleteUser(userService.getUserById(id));
-//        return "redirect:/admin";
-//    }
-
-//    @RequestMapping(value = "/update", method = {RequestMethod.PUT, RequestMethod.GET})
-//    public String update(@Valid User user, BindingResult bindingResult,
-//                         @RequestParam(required = false, name = "listRoles") String[] input_roles) {
-////        if (bindingResult.hasErrors()) {
-////            return "redirect:/admin";
-////        }
-////        user.setRoles(roleService.getRolesByName(input_roles));
-//        userService.updateUser(user);
-//        return "redirect:/admin";
-//    }
 
     @PatchMapping("/update")
     public String update(@Valid User user, BindingResult bindingResult,
@@ -113,8 +96,15 @@ public class AdminController {
 //        if (bindingResult.hasErrors()) {
 //            return "redirect:/admin";
 //        }
-//        user.setRoles(roleService.getRolesByName(input_roles));
+        user.setRoles(roleService.getRolesByName(input_roles));
         userService.updateUser(user);
+//        return "redirect:/admin";
+        return "redirect:/admin";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") long id) {
+        userService.deleteUser(userService.getUserById(id));
         return "redirect:/admin";
     }
 
