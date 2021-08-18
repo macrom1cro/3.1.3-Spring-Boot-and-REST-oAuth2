@@ -15,7 +15,12 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-auto mr-auto">
-                    <H3 th:text="${user.email + ' with role: ' + user.roles}"></H3>
+                    <H3 class="text-left-right">
+                        <span class="left-text"
+                              th:text="${principalUser.email + ' with role: '}"></span>
+                        <span class="byline" th:each="role, state : ${principalUser.roles}"
+                              th:text="${role.role.split('_')[1] + ' '}"></span>
+                    </h3>
                 </div>
                 <div class="col-auto">
                     <a th:href="@{/logout}" style="color: silver">Logout</a>
@@ -56,12 +61,12 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td th:text="${user.id}">ID</td>
-                                    <td th:text="${user.firstName}">First Name</td>
-                                    <td th:text="${user.lastName}">Last Name</td>
-                                    <td th:text="${user.age}">Age</td>
-                                    <td th:text="${user.email}">Email</td>
-                                    <td th:text="${user.roles}">Role</td>
+                                    <td th:text="${principalUser.id}">ID</td>
+                                    <td th:text="${principalUser.firstName}">First Name</td>
+                                    <td th:text="${principalUser.lastName}">Last Name</td>
+                                    <td th:text="${principalUser.age}">Age</td>
+                                    <td th:text="${principalUser.email}">Email</td>
+                                    <td th:text="${principalUser.roles}">Role</td>
                                 </tr>
                                 </tbody>
                             </table>

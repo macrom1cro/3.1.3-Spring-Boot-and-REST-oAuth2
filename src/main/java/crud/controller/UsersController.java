@@ -20,7 +20,7 @@ public class UsersController {
 
     @GetMapping("")
     public String showUserPage(ModelMap model, Principal principal) {
-        model.addAttribute("user", userService.getUserByName(principal.getName()));
+        model.addAttribute("principalUser", userService.getUserByName(principal.getName()));
         return "user/user";
     }
 
