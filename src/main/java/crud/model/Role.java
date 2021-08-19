@@ -24,15 +24,8 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer(role);
-
-        return sb.delete(0,5).toString();
+        return role;
     }
-
-//    @Override
-//    public String toString() {
-//        return role;
-//    }
 
     @Override
     public String getAuthority() {

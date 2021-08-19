@@ -30,48 +30,6 @@ public class AdminController {
         return "/admin/users";
     }
 
-//    @GetMapping("/{id}")
-//    public String show(@PathVariable("id") long id, Model model) {
-//        model.addAttribute("user", userService.getUserById(id));
-//        return "/admin/user";
-//    }
-//
-//    @PatchMapping("/{id}")
-//    public String update(@ModelAttribute("user") @Valid User user,
-//                         BindingResult bindingResult,
-//                         @RequestParam(required = false, name = "listRoles") String[] input_roles) {
-//        if (bindingResult.hasErrors()) {
-//            return "admin/new";
-//        }
-//        user.setRoles(roleService.getRolesByName(input_roles));
-//        userService.updateUser(user);
-//        return "redirect:/admin";
-//    }
-//
-//    @GetMapping("/new")
-//    public String newUsers(@ModelAttribute("user") User user) {
-//        return "admin/new";
-//    }
-
-//
-//    @PostMapping("/new")
-//    public String Create(@ModelAttribute("user") @Valid User user,
-//                         BindingResult bindingResult,
-//                         @RequestParam(required = false, name = "listRoles") String[] input_roles) {
-//        if (bindingResult.hasErrors()) {
-//            return "admin/new";
-//        }
-//        user.setRoles(roleService.getRolesByName(input_roles));
-//        userService.saveUser(user);
-//        return "redirect:/admin";
-//    }
-//
-//    @GetMapping("/{id}/edit")
-//    public String edit(Model model, @PathVariable("id") long id) {
-//        model.addAttribute("user", userService.getUserById(id));
-//        return "admin/edit";
-//    }
-
     @GetMapping("/getUserById")
     @ResponseBody
     public User getUserById(long id) {
@@ -98,7 +56,6 @@ public class AdminController {
 //        }
         user.setRoles(roleService.getRolesByName(input_roles));
         userService.updateUser(user);
-//        return "redirect:/admin";
         return "redirect:/admin";
     }
 

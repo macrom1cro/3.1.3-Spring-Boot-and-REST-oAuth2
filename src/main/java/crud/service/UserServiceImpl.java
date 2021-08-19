@@ -58,13 +58,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User getUserById(long id) {
-        return userDao.getUserById(id);
+        return userRepository.findById(id).get();
     }
 
     @Transactional
     @Override
     public User getUserByName(String name) {
-        return userDao.getUserByName(name);
+        return userRepository.findByName(name);
     }
 
 }
