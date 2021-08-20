@@ -1,10 +1,8 @@
 package crud.service;
 
-import crud.dao.UserDao;
 import crud.model.User;
 import crud.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,18 +12,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    final
-    UserDao userDao;
-
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     @Override
@@ -36,14 +28,14 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void deleteUser(long id) {
-        userRepository.deleteById(id);
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
     @Transactional
     @Override
     public void updateUser(User user) {
-        if (!(user.getPassword().equals(userDao.getUserPassword(user)))){
+        if (!(user.getPassword().equals(userRepository.findById(user.getId()).get().getPassword()))){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
         userRepository.saveAndFlush(user);
