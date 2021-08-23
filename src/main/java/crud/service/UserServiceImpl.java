@@ -21,33 +21,27 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
+    public List<User> listUsers() {
+        return userRepository.findAll();
+    }
+
+    @Transactional
+    @Override
     public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
     @Transactional
     @Override
-    public void deleteUser(User user) {
-        userRepository.delete(user);
-    }
-
-    @Transactional
-    @Override
-    public void updateUser(User user) {
+    public void updateUser(User user, long id) {
         if (user.getPassword()==""){
             user.setPassword(userRepository.findById(user.getId()).get().getPassword());
         }
         if (!(user.getPassword().equals(userRepository.findById(user.getId()).get().getPassword()))){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
-        userRepository.saveAndFlush(user);
-    }
-
-    @Transactional
-    @Override
-    public List<User> listUsers() {
-        return userRepository.findAll();
+        userRepository.save(user);
     }
 
     @Transactional
@@ -60,6 +54,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByName(String name) {
         return userRepository.findByName(name);
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
     }
 
 }

@@ -3,6 +3,9 @@ package crud.controller;
 import crud.model.User;
 import crud.service.RoleService;
 import crud.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -11,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
-@Controller
-@RequestMapping("/admin")
+@RestController
+@RequestMapping(value = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminController {
     final RoleService roleService;
     final UserService userService;
@@ -24,45 +28,34 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String listUsers(ModelMap model, Principal principal) {
-        model.addAttribute("principalUser", userService.getUserByName(principal.getName()));
-        model.addAttribute("listUsers", userService.listUsers());
-        return "/admin/users";
+    public ResponseEntity <List<User>> listUsers() {
+        return new ResponseEntity<>(userService.listUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/getUserById")
+    @GetMapping("/{id}")
     @ResponseBody
-    public User getUserById(long id) {
+    public User getUserById(@PathVariable long id) {
         return userService.getUserById(id);
     }
 
-    @PostMapping("/new")
-    public String Create(@ModelAttribute("user") @Valid User user,
-                         BindingResult bindingResult,
-                         @RequestParam(required = false, name = "listRoles") String[] input_roles) {
-//        if (bindingResult.hasErrors()) {
-//            return "redirect:/admin";
-//        }
+    @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> create(@RequestBody User user,
+                       @RequestParam(required = false, name = "listRoles") String[] input_roles) {
         user.setRoles(roleService.getRolesByName(input_roles));
         userService.saveUser(user);
-        return "redirect:/admin";
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PatchMapping("/update")
-    public String update(@ModelAttribute ("user") @Valid User user, BindingResult bindingResult,
-                         @RequestParam(required = false, name = "listRoles") String[] input_roles) {
-//        if (bindingResult.hasErrors()) {
-//            return "redirect:/admin";
-//        }
-        user.setRoles(roleService.getRolesByName(input_roles));
-        userService.updateUser(user);
-        return "redirect:/admin";
+    @PutMapping(value ="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody User user, @PathVariable long id) {
+        userService.updateUser(user, id);
     }
 
-    @DeleteMapping("/delete")
-    public String delete(@ModelAttribute ("user") User user) {
-        userService.deleteUser(user);
-        return "redirect:/admin";
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable long id) {
+        userService.deleteUser(id);
     }
 
 }

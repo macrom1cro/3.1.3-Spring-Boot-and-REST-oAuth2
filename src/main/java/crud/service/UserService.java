@@ -6,11 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface UserService {
-    void saveUser(User user);
-    void deleteUser(User user);
-    void updateUser(User user);
     List<User> listUsers();
+    void saveUser(User user);
+    void updateUser(User user, long id);
     User getUserById(long id);
     User getUserByName(String name);
-
+    void deleteUser(long id);
 }
