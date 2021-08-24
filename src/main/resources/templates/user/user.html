@@ -15,8 +15,8 @@
                 <div class="col-auto mr-auto">
                     <H3 class="text-left-right">
                         <span class="left-text"
-                              th:text="${principalUser.email + ' with role: '}"></span>
-                        <span class="byline" th:each="role, state : ${principalUser.roles}"
+                              th:text="${#authentication.getPrincipal().email + ' with role: '}"></span>
+                        <span class="byline" th:each="role, state : ${#authentication.getPrincipal().roles}"
                               th:text="${role.role.split('_')[1] + ' '}"></span>
                     </h3>
                 </div>
@@ -59,12 +59,13 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td th:text="${principalUser.id}">ID</td>
-                                    <td th:text="${principalUser.firstName}">First Name</td>
-                                    <td th:text="${principalUser.lastName}">Last Name</td>
-                                    <td th:text="${principalUser.age}">Age</td>
-                                    <td th:text="${principalUser.email}">Email</td>
-                                    <td th:text="${principalUser.roles}">Role</td>
+                                    <td th:text="${#authentication.getPrincipal().id}">ID</td>
+                                    <td th:text="${#authentication.getPrincipal().firstName}">First Name</td>
+                                    <td th:text="${#authentication.getPrincipal().lastName}">Last Name</td>
+                                    <td th:text="${#authentication.getPrincipal().age}">Age</td>
+                                    <td th:text="${#authentication.getPrincipal().email}">Email</td>
+                                    <td><span th:each="role, state : ${#authentication.getPrincipal().roles}"
+                                              th:text="${role.role.split('_')[1] + ' '}"></span></td>
                                 </tr>
                                 </tbody>
                             </table>
