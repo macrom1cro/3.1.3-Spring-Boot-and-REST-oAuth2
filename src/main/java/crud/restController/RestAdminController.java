@@ -39,9 +39,7 @@ public class RestAdminController {
     }
 
     @PostMapping("/users/new")
-    public ResponseEntity<User> create(@RequestBody User user,
-                       @RequestParam(required = false, name = "listRoles") String[] input_roles) {
-        user.setRoles(roleService.getRolesByName(input_roles));
+    public ResponseEntity<User> create(@RequestBody User user) {
         userService.saveUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
