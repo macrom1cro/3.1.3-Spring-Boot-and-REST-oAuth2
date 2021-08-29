@@ -1,4 +1,4 @@
-package crud.restController;
+package crud.controller;
 
 import crud.model.User;
 import crud.service.RoleService;
@@ -17,7 +17,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestAdminController {
     final RoleService roleService;
     final UserService userService;
@@ -38,13 +38,14 @@ public class RestAdminController {
         return userService.getUserById(id);
     }
 
-    @PostMapping("/users/new")
+    @PostMapping(value = "/users")
     public ResponseEntity<User> create(@RequestBody User user) {
         userService.saveUser(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.getUserByName(user.getEmail()), HttpStatus.OK);
+//        return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    @PutMapping("/users/{id}")
+//userService.getUserByName(user.getEmail()),
+    @PutMapping(value ="/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody User user, @PathVariable long id) {
         userService.updateUser(user, id);
