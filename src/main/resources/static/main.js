@@ -156,7 +156,7 @@ function submitFormDeleteUser(event) {
 $(document).ready(function () {
     $(document).on('click', '#delete', function (event) {
         event.preventDefault();
-        var href = $(this).attr('href');
+        let href = $(this).attr('href');
         $.get(href, function (user, status) {
             $('#idDelete').val(user.id);
             $('#firstNameDelete').val(user.firstName);
@@ -172,7 +172,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $(document).on('click', '#edit', function (event) {
         event.preventDefault();
-        var href = $(this).attr('href');
+        let href = $(this).attr('href');
         $.get(href, function (user, status) {
             $('#idEdit').val(user.id);
             $('#firstNameEdit').val(user.firstName);
