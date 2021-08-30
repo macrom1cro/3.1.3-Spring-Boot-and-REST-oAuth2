@@ -66,6 +66,7 @@ document.getElementById('newUser').addEventListener('submit', submitFormNewUser)
 
 function submitFormNewUser(event) {
     event.preventDefault();
+    // event.reset();
     let formData = new FormData(event.target);
     let user = {};
     formData.forEach((value, key) => user[key] = value);
@@ -84,6 +85,7 @@ function submitFormNewUser(event) {
                 newUser => {
                     tableUsers.push(newUser);
                     showUsers(tableUsers);
+                    document.getElementById('newUser').reset();
                 })
         });
     $('#myTab li:first-child a').tab('show');
