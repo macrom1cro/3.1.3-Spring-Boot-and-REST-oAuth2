@@ -40,11 +40,9 @@ public class RestAdminController {
 
     @PostMapping(value = "/users")
     public ResponseEntity<User> create(@RequestBody User user) {
-        userService.saveUser(user);
-        return new ResponseEntity<>(userService.getUserByName(user.getEmail()), HttpStatus.CREATED);
-//        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
-//userService.getUserByName(user.getEmail()),
+
     @PutMapping(value ="/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody User user, @PathVariable long id) {
