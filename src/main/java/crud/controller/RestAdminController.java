@@ -41,7 +41,7 @@ public class RestAdminController {
     @PostMapping(value = "/users")
     public ResponseEntity<User> create(@RequestBody User user) {
         userService.saveUser(user);
-        return new ResponseEntity<>(userService.getUserByName(user.getEmail()), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserByName(user.getEmail()), HttpStatus.CREATED);
 //        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 //userService.getUserByName(user.getEmail()),

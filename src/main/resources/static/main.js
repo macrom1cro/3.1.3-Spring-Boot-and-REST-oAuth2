@@ -1,44 +1,4 @@
-// showUsers();
 let tableUsers = [];
-// function showUsers() {
-//     fetch("http://localhost:8080/admin/users").then(
-//         res => {
-//             res.json().then(
-//                 data => {
-//                     console.log(data);
-//                     if (data.length > 0) {
-//                         let temp = "";
-//                         let users = [];
-//                         data.forEach((user) => {
-//                             tableUsers.push(user)
-//                             temp += "<tr>"
-//                             temp += "<td>" + user.id + "</td>"
-//                             temp += "<td>" + user.firstName + "</td>"
-//                             temp += "<td>" + user.lastName + "</td>"
-//                             temp += "<td>" + user.age + "</td>"
-//                             temp += "<td>" + user.email + "</td>"
-//                             let temp2 = "";
-//                             JSON.parse(JSON.stringify(user.roles)).forEach((role) => {
-//                                 temp2 += role.role.substring(5) + ' ';
-//                             })
-//                             temp += "<td>" + temp2 + "</td>"
-//                             temp += "<td>" + `<a href="/admin/users/${user.id}" class="btn btn-primary" id="edit">Edit</a>` + "</td>"
-//                             temp += "<td>" + `<a href="/admin/users/${user.id}" class="btn btn-danger" id="delete">Delete</a>` + "</td>"
-//                             temp += "</tr>"
-//                         })
-//                         document.getElementById("data").innerHTML = temp;
-//                         console.log(tableUsers);
-//                         console.log(tableUsers.length)
-//                         tableUsers.forEach((user) => {
-//                             console.log(user)
-//                         })
-//                     }
-//                 }
-//             )
-//         })
-// }
-
-// let tableUsers = [];
 
 fetch("http://localhost:8080/admin/users").then(
     res => {
@@ -116,27 +76,16 @@ function submitFormNewUser(event) {
         headers: {
             'Content-Type': 'application/json',
         },
-        // success: function (response){
-        //     var arr = $.parseJSON(response);
-        //     console.log(arr)
-        // },
     });
 
     fetch(request).then(
-        // function (response){
-        //     var arr =JSON.parse(JSON.stringify(response));
-        //     console.log(arr)
-        // },
-        function (response) {
-            console.log(response);
-        },
-        function (error) {
-            console.error(error);
-        }
-    );
-
-    console.log('Запрос отправляется');
-    showUsers(tableUsers);
+        res => {
+            res.json().then(
+                newUser => {
+                    tableUsers.push(newUser);
+                    showUsers(tableUsers);
+                })
+        });
     $('#myTab li:first-child a').tab('show');
 }
 
@@ -158,24 +107,16 @@ function submitFormEditUser(event) {
     fetch(request).then(
         function (response) {
             console.log(response);
+            delete user["_method"];
+            let indexEditUser = tableUsers.findIndex(item => item.id == user["id"]);
+            tableUsers.splice(indexEditUser,1,user)
+            showUsers(tableUsers);
         },
         function (error) {
             console.error(error);
         }
     );
-    tableUsers.forEach((item, index, array)=>{
 
-    });
-
-    console.log('Запрос отправляется');
-    delete user["_method"];
-    console.log(user);
-    console.log('в другой функции', tableUsers);
-    tableUsers = tableUsers.filter(function(item) {
-        return item !== user;
-    })
-    console.log('изменилось'+ tableUsers.length);
-    showUsers(tableUsers);
     $('#editModal').modal('hide');
 
 }
@@ -197,13 +138,17 @@ function submitFormDeleteUser(event) {
     fetch(request).then(
         function (response) {
             console.log(response);
+            let deleteUser = tableUsers.find(item => item.id == user["id"]);
+            tableUsers = tableUsers.filter(function (user) {
+                return user !== deleteUser;
+            })
+            showUsers(tableUsers);
         },
         function (error) {
             console.error(error);
         }
     );
     console.log('Запрос request отправляется');
-    showUsers(tableUsers);
     $('#deleteModal').modal('hide');
 
 }
