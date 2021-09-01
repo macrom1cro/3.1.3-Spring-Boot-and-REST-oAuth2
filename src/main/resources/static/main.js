@@ -99,7 +99,7 @@ function submitFormEditUser(event) {
     let user = {};
     formData.forEach((value, key) => user[key] = value);
     user["roles"] = rolesUser("#rolesEdit");
-    let request = new Request("http://localhost:8080/admin/users/" + user["id"], {
+    let request = new Request("http://localhost:8080/admin/users/", {
         method: 'PUT',
         body: JSON.stringify(user),
         headers: {
