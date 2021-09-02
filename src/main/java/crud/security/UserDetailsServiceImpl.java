@@ -1,4 +1,4 @@
-package crud.service;
+package crud.security;
 
 
 import crud.repository.UserRepository;
@@ -18,6 +18,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        return userRepository.findByName(name);
+        return userRepository.findByEmail(name);
     }
 }

@@ -32,12 +32,9 @@ public class User implements UserDetails {
     @Column
     private int age;
 
-    @NotBlank(message = "Login is mandatory")
-    @Email(message = "Email should be valid")
     @Column
     private String email;
 
-    @NotBlank(message = "Password is mandatory")
     @Column
     private String password;
 
@@ -81,4 +78,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//    @Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     @Override
@@ -28,18 +28,19 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Transactional
     @Override
     public void updateUser(User user) {
+        System.out.println(userRepository.findPasswordById(user.getId()));
         if (user.getPassword()==""){
-            user.setPassword(userRepository.getPasswordById(user.getId()));
+            user.setPassword(userRepository.findPasswordById(user.getId()));
         }
-        if (!(user.getPassword().equals(userRepository.getPasswordById(user.getId())))){
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        if (!(user.getPassword().equals(userRepository.findPasswordById(user.getId())))){
+//            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
         userRepository.save(user);
     }
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User getUserByName(String name) {
-        return userRepository.findByName(name);
+        return userRepository.findByEmail(name);
     }
 
     @Transactional
