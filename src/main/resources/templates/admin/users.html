@@ -149,7 +149,7 @@
                                     <td th:text="${#authentication.getPrincipal().email}">Email</td>
                                     <td> <span th:each="role, state : ${#authentication.getPrincipal().roles}"
                                                th:text="${role.role.split('_')[1] + ' '}"></span>
-                                    </td>
+<!--                                    </td>-->
                                 </tr>
                                 </tbody>
                             </table>

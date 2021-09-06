@@ -3,6 +3,8 @@ package crud.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 
 @Controller
 @RequestMapping(value = "/")
@@ -14,7 +16,10 @@ public class AdminController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(Principal principal) {
+        if (principal != null) {
+            return "redirect:/admin";
+        }
         return "/login";
     }
 
