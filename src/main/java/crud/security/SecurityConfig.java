@@ -57,103 +57,76 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-////        http
-////                .antMatcher("/**")
-////                .authorizeRequests()
-////                .antMatchers("/", "/login**","/static/**").permitAll()
-//////                .antMatchers("/admin/**").access("hasAnyRole('ADMIN')")
-//////                .antMatchers("/user").access("hasAnyRole('USER')")
-////                .anyRequest().authenticated()
-////                .and().logout().logoutSuccessUrl("/").permitAll()
-////                .and()
-////                .csrf().disable();
-//        http.formLogin()
-////        указываем страницу с формой логина
-//                .loginPage("/login")
-////        указываем логику обработки при логине
-//                .successHandler(loginSuccessHandler)
-////        указываем action с формы логина
-//                .loginProcessingUrl("/login")
-//                // Указываем параметры логина и пароля с формы логина
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-////        даем доступ к форме логина всем
-//                .permitAll();
-//
-//        http.logout()
-//                // разрешаем делать логаут всем
-//                .permitAll()
-//                // указываем URL логаута
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                // указываем URL при удачном логауте
-//                .logoutSuccessUrl("/login?logout")
-//                //выклчаем кроссдоменную секьюрность (на этапе обучения неважна)
-//                .and().csrf().disable();
-//
-//        http
-//                // делаем страницу регистрации недоступной для авторизированных пользователей
-//                .authorizeRequests()
-//                //страницы аутентификаци доступна всем
-//                .antMatchers("/login").anonymous()
-//                // защищенные URL
-//                .antMatchers("/admin**").access("hasAnyRole('ADMIN')")
-//                .antMatchers("/user").access("hasAnyRole('USER')")
-//                //Все остальные страницы требуют аутентификации
-//                .anyRequest().authenticated();
-////        http.addFilterAfter(oAuth2ClientAuthenticationProcessingFilter(), LogoutFilter.class);
-//    }
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
+        http.formLogin()
+//        указываем страницу с формой логина
+                .loginPage("/login2")
+//        указываем логику обработки при логине
+                .successHandler(loginSuccessHandler)
+//        указываем action с формы логина
+                .loginProcessingUrl("/login2")
+                // Указываем параметры логина и пароля с формы логина
+                .usernameParameter("username")
+                .passwordParameter("password")
+//        даем доступ к форме логина всем
+                .permitAll();
+
+        http.logout()
+                // разрешаем делать логаут всем
+                .permitAll()
+                // указываем URL логаута
+                .deleteCookies("JSESSIONID", "XSRF-TOKEN")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .invalidateHttpSession(true)
+                // указываем URL при удачном логауте
+                .logoutSuccessUrl("/login2")
+                //выклчаем кроссдоменную секьюрность (на этапе обучения неважна)
+                .and().csrf().disable();
         http
-                .authorizeRequests(a -> a
-                        .antMatchers("/", "/error", "/webjars/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .exceptionHandling(e -> e
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
-                .oauth2Login();
-        // @formatter:on
+                // делаем страницу регистрации недоступной для авторизированных пользователей
+                .authorizeRequests()
+                //страницы аутентификаци доступна всем
+                .antMatchers("/login2").anonymous()
+                // защищенные URL
+                .antMatchers("/admin**").access("hasAnyRole('ADMIN')")
+                .antMatchers("/user").access("hasAnyRole('USER')")
+                //Все остальные страницы требуют аутентификации
+                .anyRequest().authenticated();
+        http.addFilterAfter(oAuth2ClientAuthenticationProcessingFilter(), LogoutFilter.class);
     }
 
-//    @Bean
-//    public PrincipalExtractor principalExtractor(UserServiceImpl userServiceImpl, RoleRepository roleRepository) {
-//
-//        return map -> {
-//            User user = userServiceImpl.getUserByName((String) map.get("email"));
-//            if (user == null) {
-//                User newUser = new User();
-////                Set<Role> roles = new HashSet<>();
-////                roles.add(roleRepository.findById(2L).get());
-////                roles.add(roleRepository.findById(1L).get());
-//                newUser.setFirstName((String) map.get("name"));
-//                newUser.setEmail((String) map.get("email"));
-////                newUser.setPassword("user");
-////                newUser.setRoles(roles);
-////                newUser.setLastName("123");
-//
-//                return userServiceImpl.saveUser(newUser);
-//            } else {
-//                return userServiceImpl.saveUser(user);
-//            }
-//        };
-//    }
+    @Bean
+    public PrincipalExtractor principalExtractor(UserServiceImpl userServiceImpl, RoleRepository roleRepository) {
 
-//    private OAuth2ClientAuthenticationProcessingFilter oAuth2ClientAuthenticationProcessingFilter() {
-//        OAuth2SsoProperties sso = (OAuth2SsoProperties)this.getApplicationContext().getBean(OAuth2SsoProperties.class);
-//        OAuth2RestOperations restTemplate = ((UserInfoRestTemplateFactory)this.getApplicationContext().getBean(UserInfoRestTemplateFactory.class)).getUserInfoRestTemplate();
-//        ResourceServerTokenServices tokenServices = (ResourceServerTokenServices)this.getApplicationContext().getBean(ResourceServerTokenServices.class);
-//        OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(sso.getLoginPath());
-//        filter.setRestTemplate(restTemplate);
-//        filter.setTokenServices(tokenServices);
-//        filter.setApplicationEventPublisher(this.getApplicationContext());
-//        filter.setAuthenticationSuccessHandler(loginSuccessHandler);
-//        return filter;
-//    }
+        return map -> {
+            User user = userServiceImpl.getUserByName((String) map.get("email"));
+            if (user == null) {
+                User newUser = new User();
+                Set<Role> roles = new HashSet<>();
+                roles.add(roleRepository.findById(2L).get());
+                roles.add(roleRepository.findById(1L).get());
+                newUser.setFirstName((String) map.get("name"));
+                newUser.setEmail((String) map.get("email"));
+                newUser.setPassword("user");
+                newUser.setRoles(roles);
+//                newUser.setLastName("123");
+                return userServiceImpl.saveUser(newUser);
+            } else {
+                return userServiceImpl.saveUser(user);
+            }
+        };
+    }
 
+        private OAuth2ClientAuthenticationProcessingFilter oAuth2ClientAuthenticationProcessingFilter() {
+        OAuth2SsoProperties sso = (OAuth2SsoProperties)this.getApplicationContext().getBean(OAuth2SsoProperties.class);
+        OAuth2RestOperations restTemplate = ((UserInfoRestTemplateFactory)this.getApplicationContext().getBean(UserInfoRestTemplateFactory.class)).getUserInfoRestTemplate();
+        ResourceServerTokenServices tokenServices = (ResourceServerTokenServices)this.getApplicationContext().getBean(ResourceServerTokenServices.class);
+        OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(sso.getLoginPath());
+        filter.setRestTemplate(restTemplate);
+        filter.setTokenServices(tokenServices);
+        filter.setApplicationEventPublisher(this.getApplicationContext());
+        filter.setAuthenticationSuccessHandler(loginSuccessHandler);
+        return filter;
+    }
 }

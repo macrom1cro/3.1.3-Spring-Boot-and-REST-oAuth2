@@ -15,7 +15,7 @@ public class AdminController {
         return "/admin/users";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login2")
     public String loginPage(Principal principal) {
         if (principal != null) {
             return "redirect:/admin";
